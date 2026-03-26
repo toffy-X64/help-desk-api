@@ -11,6 +11,7 @@ namespace HelpDesk.Core.Abstractions
     {
         ValueTask<User[]> Get(SearchOptions options);
         ValueTask<User?> Get(Guid id);
+        ValueTask<User?> GetByEmail(string email);
         void Add(User user);
         void Update(User user);
         Task<bool> IsEmailTaken(string email);

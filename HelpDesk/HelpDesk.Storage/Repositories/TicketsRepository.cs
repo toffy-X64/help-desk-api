@@ -22,7 +22,13 @@ namespace HelpDesk.Storage.Repositories
 
         public async ValueTask<Ticket?> Get(Guid id)
         {
-            return await Context.Tickets.FirstOrDefaultAsync(u => u.Id == id);
+            return await Context.Tickets
+                .AsNoTracking()
+                .Include(t => t.Comments)
+                    .ThenInclude(c => c.User)
+                .Include(t => t.CreatedBy)
+                .Include(t => t.AssignedTo)
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async ValueTask<Ticket[]> GetAssignedToAdmin(Guid adminId, FilterSelectOptions options)

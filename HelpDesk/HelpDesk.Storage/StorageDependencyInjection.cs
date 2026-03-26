@@ -1,4 +1,5 @@
 ﻿using HelpDesk.Core.Abstractions;
+using HelpDesk.Storage.Logic;
 using HelpDesk.Storage.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,9 @@ namespace HelpDesk.Storage
                 throw new Exception("Connection string `SqlServer` not found.");
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(sqlServerConnectionString));
+
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<IJwtTokenService, JwtTokenService>();
 
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<ITicketsRepository, TicketsRepository>();

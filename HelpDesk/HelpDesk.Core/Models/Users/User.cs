@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelpDesk.Core.Models.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,13 @@ namespace HelpDesk.Core.Models
         public string PasswordHash { get; set; }
         public string Role { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        public bool CanAssignTicket()
+        {
+            if (Role == UserRoles.Admin)
+                return true;
+
+            return false;
+        }
     }
 }

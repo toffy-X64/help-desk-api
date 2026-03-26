@@ -1,4 +1,7 @@
-﻿using HelpDesk.Storage;
+﻿using FluentValidation;
+using HelpDesk.Application.Logic;
+using HelpDesk.Application.Services.Auth;
+using HelpDesk.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -13,6 +16,12 @@ namespace HelpDesk.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<JwtService>();
+            services.AddScoped<IValidator<RegisterRequest>, RegisterValidator>();
+            services.AddScoped<IValidator<LoginRequest>, LoginValidator>();
+
+            services.AddScoped<AuthService>();
+
             services.AddStorage(configuration);
 
             return services;

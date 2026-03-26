@@ -13,11 +13,12 @@ namespace HelpDesk.Core.Models
         public string Description { get; set; }
         public string Status { get; set; }
 
-        public Guid AssignedToId { get; set; }
-        public User AssignedTo { get; set; }
+        public Guid? AssignedToId { get; set; }
+        public User? AssignedTo { get; set; }
         public Guid CreatedById { get; set; }
         public User CreatedBy { get; set; }
 
         public DateTime CreatedDate { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

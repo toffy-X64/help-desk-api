@@ -30,6 +30,11 @@ namespace HelpDesk.Storage.Repositories
             return await Context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
+        public async ValueTask<User?> GetByEmail(string email)
+        {
+            return await Context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
         public async Task<bool> IsEmailTaken(string email)
         {
             return await Context.Users.AnyAsync(u => u.Email == email);
