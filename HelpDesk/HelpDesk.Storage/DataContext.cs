@@ -11,6 +11,8 @@ namespace HelpDesk.Storage
 {
     public class DataContext : DbContext, IUnitOfWork
     {
+        private ITransaction? _currentTransaction;
+
         public DataContext(DbContextOptions<DataContext> options) : base(options) 
         {
             Database.EnsureCreated();
@@ -20,9 +22,20 @@ namespace HelpDesk.Storage
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
-        public Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
         {
-            return SaveChangesAsync();
+            return await base.SaveChangesAsync();
+        }
+
+        public async Task<ITransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
+        {
+            if (_currentTransaction != null)
+                throw new InvalidOperationException("A transaction is already in progress");
+
+            var transaction = await Database.BeginTransactionAsync(cancellationToken);
+            _currentTransaction = new EfTransaction(transaction);
+
+            return _currentTransaction;
         }
     }
 }

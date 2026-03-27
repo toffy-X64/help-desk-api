@@ -19,7 +19,8 @@ namespace HelpDesk.Storage.Repositories
         {
             return await
                 Context.Users
-                .Where(u =>  EF.Functions.Like(u.Name, $"%{options.SearchText}%") )
+                .AsNoTracking()
+                .Where(u => !u.IsDeleted && EF.Functions.Like(u.Name, $"%{options.SearchText}%"))
                 .Skip(options.Offset)
                 .Take(options.Limit)
                 .ToArrayAsync();
@@ -27,12 +28,16 @@ namespace HelpDesk.Storage.Repositories
 
         public async ValueTask<User?> Get(Guid id)
         {
-            return await Context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return await Context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async ValueTask<User?> GetByEmail(string email)
         {
-            return await Context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return await Context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<bool> IsEmailTaken(string email)

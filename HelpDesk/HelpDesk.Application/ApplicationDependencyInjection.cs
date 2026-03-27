@@ -1,6 +1,9 @@
 ﻿using FluentValidation;
-using HelpDesk.Application.Logic;
 using HelpDesk.Application.Services.Auth;
+using HelpDesk.Application.Services.Tickets;
+using HelpDesk.Application.Services.Tickets.Requests;
+using HelpDesk.Application.Services.Tickets.Validator;
+using HelpDesk.Application.Services.Users;
 using HelpDesk.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,14 +19,16 @@ namespace HelpDesk.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<JwtService>();
-            services.AddScoped<IValidator<RegisterRequest>, RegisterValidator>();
-            services.AddScoped<IValidator<LoginRequest>, LoginValidator>();
-
-            services.AddScoped<AuthService>();
-
             services.AddStorage(configuration);
 
+            services.AddScoped<IValidator<RegisterRequest>, RegisterValidator>();
+            services.AddScoped<IValidator<LoginRequest>, LoginValidator>();
+            services.AddScoped<IValidator<CreateTicketRequest>, CreateTicketValidator>();
+            services.AddScoped<IValidator<CreateCommentRequest>, CreateCommentValidator>();
+
+            services.AddScoped<AuthService>();
+            services.AddScoped<UsersService>();
+            services.AddScoped<TicketsService>();
             return services;
         }
     }

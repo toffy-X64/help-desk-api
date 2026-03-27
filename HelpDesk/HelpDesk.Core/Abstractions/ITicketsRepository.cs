@@ -1,4 +1,5 @@
 ﻿using HelpDesk.Core.Models;
+using HelpDesk.Shared.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace HelpDesk.Core.Abstractions
         void AddComment(Comment comment);
         void Update(Ticket ticket);
         ValueTask<Ticket?> Get(Guid id);
+        ValueTask<Ticket?> GetForUpdate(Guid id);
+        ValueTask<Ticket[]> GetAll(PaginationQuery pagination);
+        ValueTask<Ticket[]> GetManyWithStatus(FilterSelectOptions options);
         ValueTask<Ticket[]> GetAssignedToAdmin(Guid adminId, FilterSelectOptions options);
         ValueTask<Ticket[]> GetCreatedByUser(Guid userId, FilterSelectOptions options);
     }

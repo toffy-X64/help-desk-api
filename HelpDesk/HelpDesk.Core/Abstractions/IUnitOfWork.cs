@@ -10,5 +10,13 @@ namespace HelpDesk.Core.Abstractions
     public interface IUnitOfWork
     {
         Task<int> SaveChangesAsync();
+        Task<ITransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
+    }
+
+    public interface ITransaction : IAsyncDisposable, IDisposable
+    {
+        Guid TransactionId { get; }
+        Task CommitAsync(CancellationToken cancellationToken = default);
+        Task RollbackAsync(CancellationToken cancellationToken = default);
     }
 }

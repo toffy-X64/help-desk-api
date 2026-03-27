@@ -14,9 +14,10 @@ namespace HelpDesk.Core.Models
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string Role { get; set; }
+        public bool IsDeleted { get; set; } = false;
         public DateTime CreatedAt { get; set; }
 
-        public bool CanAssignTicket()
+        public bool CanManipulateTickets()
         {
             if (Role == UserRoles.Admin)
                 return true;

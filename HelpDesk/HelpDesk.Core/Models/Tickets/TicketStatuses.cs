@@ -8,7 +8,7 @@ namespace HelpDesk.Core.Models.Tickets
 {
     public static class TicketStatuses
     {
-        public static string Created => "CREATED";
+        public static string Created => "PENDING";
         public static string InProgress => "IN_PROGRESS";
         public static string Resolved => "RESOLVED";
     }

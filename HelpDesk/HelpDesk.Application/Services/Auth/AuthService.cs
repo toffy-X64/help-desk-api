@@ -6,6 +6,8 @@ using HelpDesk.Core.Models;
 using HelpDesk.Core.Models.Users;
 
 using HelpDesk.Shared.Common;
+using HelpDesk.Storage;
+using HelpDesk.Storage.Repositories;
 
 namespace HelpDesk.Application.Services.Auth
 {
@@ -57,9 +59,10 @@ namespace HelpDesk.Application.Services.Auth
                 Name = request.Name,
                 PasswordHash = _passwordHasher.HashPassword(request.Password),
                 CreatedAt = DateTime.UtcNow,
-                Role = "User"
+                Role = UserRoles.User
             };
             _usersRepository.Add(user);
+
             await UnitOfWork.SaveChangesAsync();
 
             string token = _jwtService.GenerateUserToken(user);

@@ -9,11 +9,15 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="9.0.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\HelpDesk.Application\HelpDesk.Application.csproj" />
     <ProjectReference Include="..\HelpDesk.Core\HelpDesk.Core.csproj" />
+    <ProjectReference Include="..\HelpDesk.Shared\HelpDesk.Shared.csproj" />
   </ItemGroup>
 
 </Project>
