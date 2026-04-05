@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "7114:80"
+    environment:
+      DB_SERVER: "45.131.183.237"
+      DB_NAME: "HelpDeskDB"
+      DB_USER: "sa"
+      DB_PASSWORD: "Strong!Password123"
+      JWT_SECRET: "dH73dhsidugh398dgwppzneduywmf83Yjhdfdpjaawekoppk"
+    depends_on:
+      - mssql
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "Strong!Password123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+
+volumes:
+  mssql_data:
